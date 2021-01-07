@@ -1,0 +1,114 @@
+﻿@{
+    ViewData["Title"] = "Main";
+}
+@model List<Logistic.Data.Model.DeliveryPlace>;
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>DataTables</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">DataTables</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">DataTable with default features</h3>
+                        @using (Html.BeginForm("New", "Home"))
+                        {
+                            <input type="submit" value="New" id="btnSubmit" class="btn btn-success float-right" />
+                        }
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Adress</th>
+                                    <th>Phone</th>
+                                    <th>CreateDate</th>
+                                    <th style="width: 15%">
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var g in Model)
+                                {
+                                    <tr>
+                                        <td>@g.ID</td>
+                                        <td>@g.Name</td>
+                                        <td>@g.Adress</td>
+                                        <td>@g.Phone</td>
+                                        <td>@g.CreateDate.ToString("dd/MM/yyyy")</td>
+                                        <td>
+                                            <a class="btn btn-info btn-sm" value="@g.ID">
+                                                <i class="fas fa-pencil-alt">
+                                                </i>
+                                                Edit
+                                            </a>
+                                            <a class="btn btn-danger btn-sm" value="@g.ID">
+                                                <i class="fas fa-trash">
+                                                </i>
+                                                Delete
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Adress</th>
+                                    <th>Phone</th>
+                                    <th>CreateDate</th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+@section scripts {
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true,
+                "autoWidth": false,
+            });
+        });
+        $(".card-body").on('click', '.btn-info', function (e) {
+            e.preventDefault();
+            var id = $(this).attr('value');
+            window.location.href = '/Home/Detail/' + id;
+        });
+        $(".card-body").on('click', '.btn-danger', function (e) {
+            e.preventDefault();
+            var id = $(this).attr('value');
+            window.location.href = '/Home/DeteleDetail/' + id;
+        });
+    </script>
+}
